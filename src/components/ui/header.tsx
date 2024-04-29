@@ -26,7 +26,7 @@ const Header = async () => {
     <header>
       <nav className="px-4 py-2.5">
         <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
-          <h1 className="text-3xl font-bold">Quizz AI</h1>
+          <h1 className="text-3xl font-bold">NoteStream</h1>
           <div>
         {
           session?.user ? (
