@@ -1,5 +1,5 @@
-// import { NextRequest, NextResponse } from "next/server";
-// import {getResult} from "../getResult";
+import { NextRequest, NextResponse } from "next/server";
+import {getResult} from "../getResult";
 
 // export async function GET(req: NextRequest) {
 //   // Convert the URL string to a URL object

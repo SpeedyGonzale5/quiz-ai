@@ -13,6 +13,44 @@ interface SaveQuizzData extends Quizz {
 //added jobId to the function, please put it back on later if needed
 // export default async function saveQuizz(jobId: string,quizzData: SaveQuizzData) {
 
+// export default async function saveQuizz(jobId: string,quizzData: SaveQuizzData) {
+//   const { name, description, questions } = quizzData;
+
+//   const newQuizz = await db
+//     .insert(quizzes)
+//     .values({
+//       name,
+//       description
+//     })
+//     .returning({ insertedId: quizzes.id });
+//   const quizzId = newQuizz[0].insertedId;
+
+//   await db.transaction(async (tx) => {
+//     for (const question of questions) {
+//       const [{ questionId }] = await tx
+//         .insert(dbQuestions)
+//         .values({
+//           questionText: question.questionText,
+//           quizzId
+//         })
+//         .returning({ questionId: dbQuestions.id });
+
+//       if (question.answers && question.answers.length > 0) {
+//         await tx.insert(questionAnswers).values(
+//           question.answers.map((answer) => ({
+//             answerText: answer.answerText,
+//             isCorrect: answer.isCorrect,
+//             questionId
+//           }))
+//         )
+//       }
+//     }
+//   })
+
+//   return { quizzId };
+// }
+
+//from github
 export default async function saveQuizz(quizzData: SaveQuizzData) {
   const { name, description, questions } = quizzData;
 
