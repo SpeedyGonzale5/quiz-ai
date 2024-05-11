@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { PRICE_ID } from "@/lib/utils";
 import UpgradePlan from "../UpgradePlan";
 import { redirect } from 'next/navigation'
+import FileUpload from "@/components/FileUpload";
 
 const page = async () => {
   const session = await auth();
@@ -26,6 +27,7 @@ const page = async () => {
           <>
             <h2 className="text-3xl font-bold mb-4">What do you want to be quizzed about today?</h2>
             <UploadDoc />
+            <FileUpload />
           </> :
           <UpgradePlan />
         }

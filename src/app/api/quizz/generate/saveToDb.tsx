@@ -10,6 +10,9 @@ interface SaveQuizzData extends Quizz {
   questions: Array<Question & { answers?: Answer[] }>;
 }
 
+//added jobId to the function, please put it back on later if needed
+// export default async function saveQuizz(jobId: string,quizzData: SaveQuizzData) {
+
 export default async function saveQuizz(quizzData: SaveQuizzData) {
   const { name, description, questions } = quizzData;
 

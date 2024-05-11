@@ -7,6 +7,11 @@ import { PDFLoader } from "langchain/document_loaders/fs/pdf";
 import { JsonOutputFunctionsParser } from "langchain/output_parsers";
 
 import saveQuizz from "./saveToDb";
+import { extractTextFromPDF } from "./extractTextFromPdf";
+import { generateQuiz } from "./generateQuiz";
+import { processInBackground } from "../processInBackground";
+
+//original file
 
 export async function POST(req: NextRequest) {
   const body = await req.formData();
@@ -91,8 +96,11 @@ export async function POST(req: NextRequest) {
       ],
     });
 
+    const startTime = Date.now();
     const result: any = await runnable.invoke([message]);
-    console.log(result);
+    console.log(result)
+    const endTime = Date.now();
+    console.log(`Operation took ${endTime - startTime} milliseconds`);
 
     const { quizzId } = await saveQuizz(result.quizz);
 
@@ -101,3 +109,45 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: e.message }, { status: 500 });
   }
 }
+
+// export async function POST(req: NextRequest) {
+//   const body = await req.formData();
+//   const document = body.get("pdf");
+
+//   try {
+//     const texts = await extractTextFromPDF(document as Blob);
+//     const result = await generateQuiz(texts);
+
+//     console.log(result);
+
+//     const { quizzId } = await saveQuizz(result.quizz);
+//     return NextResponse.json({ quizzId }, { status: 200 });
+//   } catch (e: any) {
+//     console.error("Error processing request:", e);
+//     return NextResponse.json({ error: e.message }, { status: 500 });
+//   }
+// }
+
+
+//Only sends a fileID, mos recent addition
+// export async function POST(req: NextRequest) {
+//   const body = await req.formData();
+//   const document = body.get("pdf");
+
+//   // Generate a unique job ID
+//   const jobId = generateUniqueId();
+//   if (document instanceof Blob) {
+//     // Start the processing in the background
+//     processInBackground(document, jobId);
+//   } else {
+//     console.error("Invalid document type: Expected a Blob.");
+//     return NextResponse.json({ error: "Invalid document type" }, { status: 400 });
+//   }
+
+//   // Immediately return the job ID to the client
+//   return NextResponse.json({ jobId }, { status: 202 });
+// }
+
+// function generateUniqueId() {
+//   return Math.random().toString(36).substring(2, 15);
+// }
